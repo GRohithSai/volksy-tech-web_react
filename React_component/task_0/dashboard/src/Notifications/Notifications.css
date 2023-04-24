@@ -1,17 +1,21 @@
+:root {
+	--primar-color: #E11D3F;
+}
+
 .Notifications {
-  border: thin dotted #e0344a;
-  padding: 4px 16px;
-  float: right;
-}
-[data-notification-type='default'] {
-  color: blue;
+	border: 1px solid var(--primar-color);
+	padding: 1rem;
 }
 
-[data-notification-type='urgent'] {
-  color: red;
+.menuItem p {
+	right: 3rem;
+	position: absolute;
 }
 
-.menuItem {
-  text-align: right;
-  margin-right: 16px;
+[data-notification-type="default"] {
+	color: blue;
+}
+
+[data-notification-type="urgent"] {
+	color: red;
 }
