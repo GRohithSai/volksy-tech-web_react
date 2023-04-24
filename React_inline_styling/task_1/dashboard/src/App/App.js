@@ -1,10 +1,13 @@
-import React, { Component, useEffect, useRef } from 'react'
+import React, { Component } from 'react'
 import Notifications from '../Notifications/Notifications'
 import { getLatestNotification } from '../utils/utils'
+import { StyleSheet, css } from 'aphrodite'
 import Login from '../Login/Login'
 import Header from '../Header/Header'
 import Footer from '../Footer/Footer'
 import CourseList from '../CourseList/CourseList'
+import BodySection from '../BodySection/BodySection'
+import BodySectionWithMarginBottom from '../BodySection/BodySectionWithMarginBottom'
 import propTypes from 'prop-types'
 
 
@@ -15,20 +18,22 @@ class App extends Component {
 
 	// class function to check if component is mounted
 	componentDidMount() {
-		document.addEventListener('keydown', (e) => {
-			if (e.ctrlKey && e.key === 'h') {
-				alert('Logging you out')
-				// e.preventDefault()
-				this.props.logOut()
-			}
-		})
+		window.addEventListener('keydown', this.keyDownHandler);
+		this.keyDownHandler
 	}
 
 	// class function to check if component is unmounted
 	componentWillUnmount() {
-		document.removeEventListener('keydown', (e) => {});
+		window.removeEventListener('keydown', this.keyDownHandler);
 	}
 
+	// class function to check if ctrl-h is pressed
+	keyDownHandler = (e) => {
+		if (e.keyCode === 72 && e.ctrlKey) {
+			alert('Logging you out');
+			this.props.logOut();
+		}
+	}
 
 	render() {
 		// assign props to local variables
@@ -47,13 +52,23 @@ class App extends Component {
 		]
 	
 		return (
-			<div className="App">
+			<div className={css(bodyStyles.App)}>
 				<Notifications listNotifications={listNotifications} />
 				<Header />
 				<div className="App-body">
-					{isLoggedIn ? <CourseList listCourses={listCourses} /> : <Login />}
+					{isLoggedIn
+						? 
+						<BodySectionWithMarginBottom title="Course list">
+							<CourseList listCourses={listCourses} />
+						</BodySectionWithMarginBottom>
+						: 
+						<BodySectionWithMarginBottom title="Login in to continue">
+							<Login />
+						</BodySectionWithMarginBottom>
+					}
+					<BodySection title="News from the School"><p>Boring random text</p></BodySection>
 				</div>
-				<div className="App-footer">
+				<div className={css(footerStyles.Footer)}>
 					<Footer />
 				</div>
 			</div>
@@ -61,10 +76,32 @@ class App extends Component {
 	}
 }
 
+const primaryColor = '#E11D3F';
+
+const bodyStyles = StyleSheet.create({
+	App: {
+		backgroundColor: '#ffffff',
+		display: 'flex',
+		flexDirection: 'column',
+	}
+});
+
+const footerStyles = StyleSheet.create({
+	Footer: {
+		display: 'flex',
+		flexDirection: 'row',
+		justifyContent: 'center',
+		alignItems: 'center',
+		borderTop: `3px solid ${primaryColor}`,
+		padding: '1rem',
+		fontStyle: 'italic',
+	}
+});
+
 
 App.defaultProps = {
 	isLoggedIn: false,
-	logOut: () => {}
+	logOut: () => {console.log('logOut function console log for testing')}
 }
 
 App.propTypes = {

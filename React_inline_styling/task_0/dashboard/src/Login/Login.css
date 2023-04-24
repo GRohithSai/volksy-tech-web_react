@@ -1,10 +1,30 @@
-.login {
-  padding: 16px 24px;
+:root {
+	--primary-color: #E11D3F;
+	font: 18px Helvetica, Arial, sans-serif;
 }
-.login input,
-.login button {
-  margin: 4px;
+
+.App-body {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 3rem;
+	padding-top: 1rem;
+	min-height: 50vh;
 }
-.login button {
-  cursor: pointer;
+
+.inputs {
+	display: flex;
+	flex-direction: row;
+}
+
+input {
+	height: 15px;
+	margin-left: 0.2rem;
+}
+
+label {
+	margin-left: 0.3rem;
+}
+
+button {
+	height: 21px;
 }
